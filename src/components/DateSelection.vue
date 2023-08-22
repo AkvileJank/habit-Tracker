@@ -5,13 +5,12 @@ import rightNav from './icons/rightNav.png'
 import { store } from './Store.Js'
 import { useRouter } from 'vue-router'
 
-const today = new Date()
-// to disable navigation to later days than tommorow
-const previousDay = new Date(today)
-previousDay.setDate(previousDay.getDate()-1)
+const todayDate = new Date()
+const previousDay = new Date(todayDate)
+// to disable navigation to later days than tommorrow
+previousDay.setDate(previousDay.getDate() - 1)
 
 const displayedDates = ref([])
-// const selectedDate = ref(new Date())
 
 //displays the dates when app is loaded immediately, without it dates are displayed only when buttons are pressed
 onMounted(() => {
@@ -42,12 +41,14 @@ const navigate = (days) => {
   updateDisplayedDates()
 }
 
-
 const router = useRouter()
-watch(() => store.selectedDate.value, (newDate) => {
-  const formattedDate = newDate.toLocaleDateString('en-CA')
-  router.replace({ name: 'Homepage', params: { selectedDate: formattedDate } })
-})
+watch(
+  () => store.selectedDate.value,
+  (newDate) => {
+    const formattedDate = newDate.toLocaleDateString('en-CA')
+    router.replace({ name: 'Homepage', params: { selectedDate: formattedDate } })
+  }
+)
 
 //bidirectional data binding between url param and selected date - changes to url update store.selectedDate.value
 onBeforeMount(() => {
@@ -56,8 +57,6 @@ onBeforeMount(() => {
     store.selectedDate.value = urlDate
   }
 })
-
-
 </script>
 
 <template>
@@ -90,9 +89,7 @@ onBeforeMount(() => {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
-  /* padding: 0 20px; */
+  justify-content: flex-start;
 }
 
 .date-select {
@@ -100,10 +97,11 @@ onBeforeMount(() => {
   padding: 10px;
   background-color: #f48e35;
   border-radius: 1rem;
+  width: 18%;
 }
 
 .dates {
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;

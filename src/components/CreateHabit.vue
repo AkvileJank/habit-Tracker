@@ -1,20 +1,20 @@
 <script setup>
-import { ref} from 'vue'
+import { ref } from 'vue'
+import { store } from './Store.Js'
 
-const allStoredHabits = ref(JSON.parse(localStorage.getItem('habits')) || [])
-const todayFullDate = new Date()
-const today = todayFullDate.toLocaleDateString('en-CA')
-
-const todayHabits = ref(JSON.parse(localStorage.getItem(today) || {})) // dictionary
+const todayHabits = ref(JSON.parse(localStorage.getItem(store.today) || {})) // dictionary
+const habitName = ref('')
 
 function addHabit() {
-  allStoredHabits.value.push(habitName.value)
+  store.habitBank.value.push(habitName.value)
   todayHabits.value[habitName.value] = false
-  localStorage.setItem(today, JSON.stringify(todayHabits.value))
-  localStorage.setItem('habits', JSON.stringify(allStoredHabits.value))
+  uploadToStorage()
 }
 
-const habitName = ref('')
+function uploadToStorage() {
+  localStorage.setItem(store.today, JSON.stringify(todayHabits.value))
+  localStorage.setItem('habits', JSON.stringify(store.habitBank.value))
+}
 </script>
 
 <template>

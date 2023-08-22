@@ -4,9 +4,8 @@ import addIcon from './icons/addIcon.png'
 import { useRouter } from 'vue-router'
 import {store} from './Store.Js'
 
-const formattedDate = computed(() => {
-  const format = { month: 'long', day: 'numeric' }
-  return store.selectedDate.value.toLocaleDateString('en-US', format)
+const props = defineProps({
+  monthDay: String
 })
 
 const router = useRouter()
@@ -18,7 +17,7 @@ const navigateToNewHabit = () => {
 <template>
   <div class="header-elements">
     <div class="date">
-      <h3>{{ formattedDate }}</h3>
+      <h3>{{ monthDay }}</h3>
     </div>
     <img :src="addIcon" alt="Add habbit" @click="navigateToNewHabit"/>
   </div>
@@ -45,5 +44,8 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+h3 {
+  font-weight: bold;
 }
 </style>
