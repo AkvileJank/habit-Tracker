@@ -11,8 +11,8 @@ const formattedDate = computed(() => {
 
 const router = useRouter()
 const navigateToNewHabit = () => {
-  router.push({ name: 'NewHabit' });
-};
+  router.push({ name: 'NewHabit' })
+}
 </script>
 
 <template>

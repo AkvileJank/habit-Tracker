@@ -1,8 +1,14 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, watch, onMounted, ref } from 'vue'
 import leftNav from './icons/leftNav.png'
 import rightNav from './icons/rightNav.png'
 import { store } from './Store.Js'
+import { useRouter } from 'vue-router'
+
+const today = new Date()
+// to disable navigation to later days than tommorow
+const previousDay = new Date(today)
+previousDay.setDate(previousDay.getDate()-1)
 
 const displayedDates = ref([])
 // const selectedDate = ref(new Date())
@@ -35,6 +41,23 @@ const navigate = (days) => {
   store.selectedDate.value = newDate // Update the selectedDate with the new copy
   updateDisplayedDates()
 }
+
+
+const router = useRouter()
+watch(() => store.selectedDate.value, (newDate) => {
+  const formattedDate = newDate.toLocaleDateString('en-CA')
+  router.replace({ name: 'Homepage', params: { selectedDate: formattedDate } })
+})
+
+//bidirectional data binding between url param and selected date - changes to url update store.selectedDate.value
+onBeforeMount(() => {
+  if (router.currentRoute.value.params.selectedDate) {
+    const urlDate = new Date(router.currentRoute.value.params.selectedDate)
+    store.selectedDate.value = urlDate
+  }
+})
+
+
 </script>
 
 <template>
@@ -52,7 +75,12 @@ const navigate = (days) => {
           <div class="day">{{ formatDateDay(date) }}</div>
         </div>
       </div>
-      <img :src="rightNav" @click="navigate(1)" alt="Navigate right" />
+      <img
+        v-show="store.selectedDate.value < previousDay"
+        :src="rightNav"
+        @click="navigate(1)"
+        alt="Navigate right"
+      />
     </div>
   </div>
 </template>
