@@ -1,9 +1,11 @@
 <script setup>
 import { onBeforeMount, watch, onMounted, ref } from 'vue'
-import leftNav from './icons/leftNav.png'
-import rightNav from './icons/rightNav.png'
-import { store } from './Store.Js'
 import { useRouter } from 'vue-router'
+import leftNav from './leftNav.png'
+import rightNav from './rightNav.png'
+import store from '../../../components/Store.Js'
+
+
 
 const todayDate = new Date()
 const previousDay = new Date(todayDate)
@@ -12,19 +14,19 @@ previousDay.setDate(previousDay.getDate() - 1)
 
 const displayedDates = ref([])
 
-//displays the dates when app is loaded immediately, without it dates are displayed only when buttons are pressed
-onMounted(() => {
-  updateDisplayedDates()
-})
+// displays the dates when app is loaded immediately, without it dates are displayed only when buttons are pressed
 
 const updateDisplayedDates = () => {
   displayedDates.value = []
-  for (let i = 4; i >= 0; i--) {
+  for (let i = 4; i >= 0; i -= 1) {
     const pastDate = new Date(store.selectedDate.value) // Create a copy
     pastDate.setDate(pastDate.getDate() - i) // Use pastDate for calculations
     displayedDates.value.push(pastDate)
   }
 }
+onMounted(() => {
+  updateDisplayedDates()
+})
 
 const formatDateMonth = (date) => {
   return new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date)
@@ -42,6 +44,7 @@ const navigate = (days) => {
 }
 
 const router = useRouter()
+
 watch(
   () => store.selectedDate.value,
   (newDate) => {
@@ -50,7 +53,7 @@ watch(
   }
 )
 
-//bidirectional data binding between url param and selected date - changes to url update store.selectedDate.value
+// bidirectional data binding between url param and selected date - changes to url update store.selectedDate.value
 onBeforeMount(() => {
   if (router.currentRoute.value.params.selectedDate) {
     const urlDate = new Date(router.currentRoute.value.params.selectedDate)
@@ -62,9 +65,12 @@ onBeforeMount(() => {
 <template>
   <div>
     <div class="date-navigation">
-      <img :src="leftNav" @click="navigate(-1)" alt="Navigate left" />
+      <button type="button" @click="navigate(-1)">
+        <img :src="leftNav" alt="Navigate left" />
+      </button>
       <div class="dates">
-        <div
+        <button
+          type="button"
           class="date-select"
           v-for="date in displayedDates"
           :key="date"
@@ -72,19 +78,21 @@ onBeforeMount(() => {
         >
           <div class="month">{{ formatDateMonth(date) }}</div>
           <div class="day">{{ formatDateDay(date) }}</div>
-        </div>
+        </button>
       </div>
-      <img
-        v-show="store.selectedDate.value < previousDay"
-        :src="rightNav"
-        @click="navigate(1)"
-        alt="Navigate right"
-      />
+      <button type="button" v-show="store.selectedDate.value < previousDay" @click="navigate(1)">
+        <img :src="rightNav" alt="Navigate right" />
+      </button>
     </div>
   </div>
 </template>
 
 <style scoped>
+button {
+  background-color: transparent;
+  border: none;
+}
+
 .date-navigation {
   width: 100%;
   display: flex;
@@ -95,9 +103,16 @@ onBeforeMount(() => {
 .date-select {
   text-align: center;
   padding: 10px;
-  background-color: #f48e35;
+  background-color: #fe9c46;
   border-radius: 1rem;
+  border: none;
   width: 18%;
+  height: 4.5rem;
+}
+
+.date-select:hover {
+  cursor: pointer;
+  background-color: #fcba81;
 }
 
 .dates {
@@ -108,15 +123,26 @@ onBeforeMount(() => {
 }
 
 .month {
-  font-size: 1rem;
   font-weight: bold;
 }
 
-.day {
+.day, .month {
   font-size: 1rem;
 }
 
 img {
   width: 2.5rem;
+  transition: transform 0.2s ease;
+}
+
+img:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+@media (width >= 768px) {
+  .date-navigation {
+    justify-content: center;
+  }
 }
 </style>
