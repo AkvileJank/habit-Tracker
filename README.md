@@ -2,7 +2,6 @@
 
 This is a habit tracking web application developed and designed by me as a learning project.
 
-<img width="128" alt="Main view mobile" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/fca6231b-5701-47af-b68d-63526524e044">
 <img width="128" alt="Add new habit view mobile" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/adf82892-7ce0-4712-a567-82bca1a33148">
 773/fa1e247d-c150-4ee6-b719-77fcca398568">
 <img width="128" alt="Screenshot 2023-09-06 at 12 15 47" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/a86eeeaf-bcb1-4d84-b2c1-55c1cbafca29">
