@@ -2,9 +2,9 @@
 
 This is a habit tracking web application developed and designed by me as a learning project.
 
-<img width="128" alt="Add new habit view mobile" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/adf82892-7ce0-4712-a567-82bca1a33148">
-<img width="128" alt="Screenshot 2023-09-06 at 12 15 47" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/a86eeeaf-bcb1-4d84-b2c1-55c1cbafca29">
-<img width="200" alt="Screenshot 2023-09-06 at 12 16 25" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/3816aa7f-4f19-4752-813e-ac1f61299bdb">
+<img width="128" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/adf82892-7ce0-4712-a567-82bca1a33148">
+<img width="128" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/a86eeeaf-bcb1-4d84-b2c1-55c1cbafca29">
+<img width="200" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/3816aa7f-4f19-4752-813e-ac1f61299bdb">
 
 Main features of the app:
 - Add new habits for today and subsequent days
