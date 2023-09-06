@@ -4,8 +4,10 @@ This is a habit tracking web application developed and designed by me as a learn
 
 <img width="128" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/adf82892-7ce0-4712-a567-82bca1a33148">
 <img width="128" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/a86eeeaf-bcb1-4d84-b2c1-55c1cbafca29">
-<img width="300" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/3816aa7f-4f19-4752-813e-ac1f61299bdb">
 <img width="128" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/29e8308e-b95f-49f2-8620-9a9059a5bf4b">
+
+
+<img width="300" src="https://github.com/AkvileJank/habit-tracker/assets/117858773/3816aa7f-4f19-4752-813e-ac1f61299bdb">
 
 
 Main features of the app:
