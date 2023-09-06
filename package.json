@@ -19,6 +19,7 @@
     "@vitejs/plugin-vue": "^4.2.3",
     "@vue/eslint-config-airbnb": "^7.0.0",
     "@vue/eslint-config-prettier": "^8.0.0",
+    "daisyui": "^3.6.1",
     "eslint": "^8.45.0",
     "eslint-plugin-vue": "^9.15.1",
     "postcss-html": "^1.5.0",

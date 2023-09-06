@@ -20,8 +20,8 @@ function setupHabitsForDay(day) {
 setupHabitsForDay(store.today)
 
 // Based on the logic, app doesn't display habits if they were not entered by the user at that point
-// For now to see functionality, I added a simulated past date that displays simulated habit data
-setupHabitsForDay('2023-08-22')
+// For now to see functionality, use this date or entered yesterday's date for example in same format
+setupHabitsForDay('2023-09-04')
 </script>
 
 <template>

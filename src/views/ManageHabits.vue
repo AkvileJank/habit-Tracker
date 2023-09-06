@@ -7,6 +7,12 @@ const selectedDate = store.selectedDate.value.toLocaleDateString('en-CA')
 const storedHabits = ref(JSON.parse(localStorage.getItem(selectedDate)))
 const habitNames = ref(Object.keys(storedHabits.value))
 
+function getDaysFromStorage() {
+  return Object.keys(localStorage).filter((key) => key !== 'habits')
+}
+
+const dayKeys = getDaysFromStorage()
+
 function updateStorage() {
   localStorage.setItem('habits', JSON.stringify(store.habitBank.value))
   localStorage.setItem(selectedDate, JSON.stringify(storedHabits.value))
@@ -18,36 +24,42 @@ function updateHabitBank(habitName, newHabitName) {
 }
 
 function updateHabitName(habitName, newHabitName) {
-  const value = storedHabits.value[habitName]
-  delete storedHabits.value[habitName]
-  storedHabits.value[newHabitName] = value
+  dayKeys.forEach(day => {
+    const storedDailyData = JSON.parse(localStorage.getItem(day))
+    storedDailyData[newHabitName] = storedDailyData[habitName]
+    delete storedDailyData[habitName]
+    localStorage.setItem(day, JSON.stringify(storedDailyData))
+  })
   updateHabitBank(habitName, newHabitName)
-  updateStorage()
+  localStorage.setItem('habits', store.habitBank.value)
 }
 
 function stopHabit(habitName) {
   const index = store.habitBank.value.indexOf(habitName)
-  store.habitBank.value.splice(index, 1) // use splice to mutate original array
+  store.habitBank.value.splice(index, 1)
   delete storedHabits.value[habitName]
   updateStorage()
 }
 
-function deleteHabit(habitName) {
-  const allKeys = Object.keys(localStorage)
-  allKeys.forEach((key) => {
-    const storedData = JSON.parse(localStorage.getItem(key))
-    if (Array.isArray(storedData) && storedData.includes(habitName)) {
-      storedData.splice(storedData.indexOf(habitName), 1)
-      localStorage.setItem(key, JSON.stringify(storedData))
-    }
-    if (Object.prototype.hasOwnProperty.call(storedData, habitName)) {
-      // this syntax does't trigger ES lint
-      delete storedData[habitName]
-      localStorage.setItem(key, JSON.stringify(storedData))
-    }
+function removeHabitFromArray(habitName) {
+  return store.habitBank.value.filter((habit) => habit !== habitName)
+}
+
+function removeHabitFromDaysStorage(habitName) {
+  dayKeys.forEach((day) => {
+    const storedDailyData = JSON.parse(localStorage.getItem(day))
+    delete storedDailyData[habitName]
+    localStorage.setItem(day, JSON.stringify(storedDailyData))
   })
+}
+
+function deleteHabit(habitName) {
+  store.habitBank.value = removeHabitFromArray(habitName)
+  localStorage.setItem('habits', JSON.stringify(store.habitBank.value))
+  removeHabitFromDaysStorage(habitName)
   storedHabits.value = JSON.parse(localStorage.getItem(selectedDate))
 }
+
 </script>
 <template>
   <NavigateBack></NavigateBack>

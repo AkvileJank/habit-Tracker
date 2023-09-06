@@ -1,15 +1,13 @@
 <script setup>
 import { onBeforeMount, watch, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import leftNav from './leftNav.png'
-import rightNav from './rightNav.png'
+import leftNav from './leftNav.svg'
+import rightNav from './rightNav.svg'
 import store from '../../../components/Store.Js'
-
-
 
 const todayDate = new Date()
 const previousDay = new Date(todayDate)
-// to disable navigation to later days than tommorrow
+// to disable navigation to later days than tomorrow
 previousDay.setDate(previousDay.getDate() - 1)
 
 const displayedDates = ref([])
@@ -63,27 +61,30 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div>
-    <div class="date-navigation">
-      <button type="button" @click="navigate(-1)">
-        <img :src="leftNav" alt="Navigate left" />
-      </button>
-      <div class="dates">
-        <button
-          type="button"
-          class="date-select"
-          v-for="date in displayedDates"
-          :key="date"
-          @click="store.selectedDate.value = date"
-        >
-          <div class="month">{{ formatDateMonth(date) }}</div>
-          <div class="day">{{ formatDateDay(date) }}</div>
-        </button>
-      </div>
-      <button type="button" v-show="store.selectedDate.value < previousDay" @click="navigate(1)">
-        <img :src="rightNav" alt="Navigate right" />
+  <div class="date-navigation">
+    <button class="left" type="button" @click="navigate(-1)">
+      <img :src="leftNav" alt="Navigate left" />
+    </button>
+    <div class="dates">
+      <button
+        type="button"
+        class="date-select"
+        v-for="date in displayedDates"
+        :key="date"
+        @click="store.selectedDate.value = date"
+      >
+        <div class="month">{{ formatDateMonth(date) }}</div>
+        <div class="day">{{ formatDateDay(date) }}</div>
       </button>
     </div>
+    <button
+      class="right"
+      type="button"
+      v-show="store.selectedDate.value < previousDay"
+      @click="navigate(1)"
+    >
+      <img :src="rightNav" alt="Navigate right" />
+    </button>
   </div>
 </template>
 
@@ -93,11 +94,18 @@ button {
   border: none;
 }
 
+.left {
+  grid-area: left;
+}
+
+.right {
+  grid-area: right;
+}
+
 .date-navigation {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 7fr 1fr;
+  grid-template-areas: 'left dates right';
 }
 
 .date-select {
@@ -106,7 +114,7 @@ button {
   background-color: #fe9c46;
   border-radius: 1rem;
   border: none;
-  width: 18%;
+  justify-items: stretch;
   height: 4.5rem;
 }
 
@@ -116,9 +124,10 @@ button {
 }
 
 .dates {
-  width: 80%;
-  display: flex;
-  flex-wrap: wrap;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 5px;
   justify-content: space-evenly;
 }
 
@@ -126,7 +135,8 @@ button {
   font-weight: bold;
 }
 
-.day, .month {
+.day,
+.month {
   font-size: 1rem;
 }
 
@@ -140,9 +150,4 @@ img:hover {
   transform: scale(1.2);
 }
 
-@media (width >= 768px) {
-  .date-navigation {
-    justify-content: center;
-  }
-}
 </style>

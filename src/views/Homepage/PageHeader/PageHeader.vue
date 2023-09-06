@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import addIcon from './addIcon.png'
+import addIcon from './addIcon.svg'
 
 defineProps({
   monthDay: {
@@ -17,10 +17,10 @@ const navigateToAddHabit = () => {
 <template>
   <div class="header-elements">
     <div class="date">
-      <h2>{{ monthDay }}</h2>
+      <h3>{{ monthDay }}</h3>
     </div>
     <button type="button" @click="navigateToAddHabit">
-      <img :src="addIcon" alt="Add habbit" />
+      <img :src="addIcon" alt="Add habit" />
     </button>
   </div>
 </template>
@@ -37,7 +37,7 @@ button {
 .header-elements {
   margin-top: 10px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr;
   grid-template-areas: 'empty date add';
   justify-items: flex-end;
   padding: 10px;

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import store from '../../components/Store.Js'
-import Plant from './plant.png'
+import Astronaut from './astronaut.svg'
 import NavigateBack from '../../components/NavigateBack.vue'
 
 const todayHabits = ref(JSON.parse(localStorage.getItem(store.today))) // dictionary
@@ -11,6 +11,15 @@ const router = useRouter()
 // to be able to use function from child component
 const navComponent = ref(null)
 // navComponent.value = NavigateBack
+const isUnique = ref(true)
+
+function checkIfUnique() {
+  if (store.habitBank.value.includes(habitName.value)) {
+    isUnique.value = false
+  } else {
+    isUnique.value = true
+  }
+}
 
 function uploadToStorage() {
   localStorage.setItem(store.today, JSON.stringify(todayHabits.value))
@@ -18,23 +27,32 @@ function uploadToStorage() {
 }
 
 function addHabit() {
-  store.habitBank.value.push(habitName.value)
-  todayHabits.value[habitName.value] = false
-  uploadToStorage()
-  router.push({path: `/date/${store.today}`})
+  if (isUnique.value) {
+    store.habitBank.value.push(habitName.value)
+    todayHabits.value[habitName.value] = false
+    uploadToStorage()
+    router.push({ path: `/date/${store.today}` })
+  }
 }
-
 </script>
 
 <template>
   <NavigateBack ref="navComponent"></NavigateBack>
-  <img class="plant" :src="Plant" alt="Growing plant" />
+  <img class="plant" :src="Astronaut" alt="Growing plant" />
   <h1>Add a new habit</h1>
   <div class="input-container">
-    <input v-model="habitName" placeholder="Enter new habit's name" />
+    <input v-model="habitName" placeholder="Enter new habit's name" @keyup="checkIfUnique" />
   </div>
   <div class="button-container">
-    <button class="add-button" v-show="habitName && habitName.length > 0" type="button" @click="addHabit">Add</button>
+    <div v-show="!isUnique" class="error-message">This habit already exists!</div>
+    <button
+      class="add-button"
+      v-show="habitName && habitName.length > 0 && isUnique"
+      type="button"
+      @click="addHabit"
+    >
+      Add
+    </button>
   </div>
 </template>
 
@@ -90,6 +108,12 @@ input {
   margin-right: auto;
   max-width: 100%;
   height: auto;
+}
+
+.error-message {
+  padding-top: 20px;
+  color: red;
+  font-size: 1.2rem;
 }
 
 @media (width >= 768px) {

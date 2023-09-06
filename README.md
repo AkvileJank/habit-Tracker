@@ -1,6 +1,12 @@
-# habittracker
+# habitTracker
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a habit tracking web application developed and designed by me as a learning project. Main features of the app:
+
+- Add new habits for today and subsequent days
+- Check/uncheck habits on any previous day or today as completed or not
+- Edit existing habits' names
+- Stop habit - remove habit from today and subsequent days
+- Delete habit - remove habit's history from all tracked days
 
 ## Recommended IDE Setup
 

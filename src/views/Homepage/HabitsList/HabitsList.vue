@@ -2,7 +2,7 @@
 import { ref, watch, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import store from '../../../components/Store.Js'
-import emptyState from './empty_state1.png'
+import emptyState from './empty-state1.svg'
 
 const router = useRouter()
 const navigateToEdit = () => {
@@ -56,15 +56,13 @@ h2,
 h3 {
   padding-top: 30px;
   text-align: center;
-  padding-bottom: 10px;
+  padding-bottom: 30px;
 }
 
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 100%;
-  height: auto;
+  img {
+  width: 100%;
+  height: 45vh;
+  object-fit: contain;
 }
 
 .habit {
